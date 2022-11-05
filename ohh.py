@@ -1,4 +1,4 @@
-﻿"""main.py"""
+﻿"""ohh.py"""
 import os
 from typing import List
 
@@ -12,7 +12,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
 CONSOLE_SCREEN_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\condump000.txt"
-MM_RANKING_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\cfg\mm_ranking.cfg"
+MM_RANKING_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\cfg\mvm_ranking.cfg"
 
 OPTIONS = Options()
 OPTIONS.headless = True  # False: Firefox window will show up
@@ -72,42 +72,42 @@ def get_all_steamid64(data: List[PlayerData]) -> List[PlayerData]:
 
 def create_cfg_file(data: List[PlayerData]):
     """Cfg file creation."""
-    mm_ranking_file = open(MM_RANKING_PATH, 'w', encoding='utf8')
+    mvm_ranking_file = open(MM_RANKING_PATH, 'w', encoding='utf8')
     event = "Operation Holographic Harvest"
 
     for i, p_d in enumerate(data):
         if p_d.progress == 0:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"beep boop, noob spotted: "
-                                  + p_d.username + " with ZERO mission completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"beep boop, noob spotted: "
+                                   + p_d.username + " with ZERO mission completed!\"\n")
         elif p_d.progress == 1:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"beep boop, noob spotted: "
-                                  + p_d.username + " with only 1 mission completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"beep boop, noob spotted: "
+                                   + p_d.username + " with only 1 mission completed!\"\n")
         elif p_d.progress < 6:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"beep boop, noob spotted: "
-                                  + p_d.username + " with only " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"beep boop, noob spotted: "
+                                   + p_d.username + " with only " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 11:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Amateur of " + event +
-                                  "with " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Amateur of " + event +
+                                   "with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 16:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Master of " + event +
-                                  "with " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Master of " + event +
+                                   "with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 21:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Pro of " + event +
-                                  "with " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Pro of " + event +
+                                   "with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 26:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Expert of " + event +
-                                  "with " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Expert of " + event +
+                                   "with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 30:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Veteran of " + event +
-                                  "with " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Veteran of " + event +
+                                   "with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress == 31:
-            mm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a God of " + event +
-                                  "with all " + str(p_d.progress) + " missions completed!\"\n")
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a God of " + event +
+                                   "with all " + str(p_d.progress) + " missions completed!\"\n")
         else:
             print(f"{p_d.progress} points has no associated sentence")
-        mm_ranking_file.write("echo \"p" + str(i + 1) + " with " + str(p_d.progress)
-                              + ' stars' + " is " + p_d.username + "\"\n\n")
-    mm_ranking_file.close()
+        mvm_ranking_file.write("echo \"p" + str(i + 1) + " with " + str(p_d.progress)
+                               + ' stars' + " is " + p_d.username + "\"\n\n")
+    mvm_ranking_file.close()
     print("Cfg file created")
 
 
