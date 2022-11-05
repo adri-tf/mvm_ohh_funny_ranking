@@ -11,4 +11,4 @@ TF2 Commands :
 - 'clear' (clear console) ;
 - 'status' (shows all player's id in server) ;
 - 'condump' (screenshot of the console saved as condump000.txt).
-- after executing the python program : 'exec mm_ranking'.
+- after executing the python program : 'exec mvm_ranking'.
