@@ -87,22 +87,22 @@ def create_cfg_file(data: List[PlayerData]):
                                    + p_d.username + " with only " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 11:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Amateur of " + event +
-                                   "with " + str(p_d.progress) + " missions completed!\"\n")
+                                   " with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 16:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Master of " + event +
-                                   "with " + str(p_d.progress) + " missions completed!\"\n")
+                                   " with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 21:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Pro of " + event +
-                                   "with " + str(p_d.progress) + " missions completed!\"\n")
+                                   " with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 26:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Expert of " + event +
-                                   "with " + str(p_d.progress) + " missions completed!\"\n")
+                                   " with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress < 30:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Veteran of " + event +
-                                   "with " + str(p_d.progress) + " missions completed!\"\n")
+                                   " with " + str(p_d.progress) + " missions completed!\"\n")
         elif p_d.progress == 31:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a God of " + event +
-                                   "with all " + str(p_d.progress) + " missions completed!\"\n")
+                                   " with all " + str(p_d.progress) + " missions completed!\"\n")
         else:
             print(f"{p_d.progress} points has no associated sentence")
         mvm_ranking_file.write("echo \"p" + str(i + 1) + " with " + str(p_d.progress)
