@@ -1,4 +1,4 @@
-# mvm_ohh_funny_ranking
+# mvm_funny_ranking
 Join a server and judge people about their score in Operation Holographic Harvest.
 
 Protocol :
