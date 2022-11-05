@@ -5,6 +5,7 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
@@ -59,11 +60,14 @@ def get_all_steamid64(data: List[PlayerData]) -> List[PlayerData]:
 
         # Player progress
         driver.get("https://archive.potato.tf/progress/" + player_data.steamid64)
-        WebDriverWait(driver, 10).until(
-            ec.visibility_of_element_located((By.XPATH, "/html/body/div/div/div[1]/div/div[2]/span/div/p")))
-        result = driver.find_element('xpath', "/html/body/div/div/div[1]/div/div[2]/span/div/p").text
-        player_data.progress = int(result.split()[2])
-        print(player_data.progress, "\t", player_data.username)
+        try:
+            WebDriverWait(driver, 6).until(
+                ec.visibility_of_element_located((By.XPATH, "/html/body/div/div/div[1]/div/div[2]/span/div/p")))
+            result = driver.find_element('xpath', "/html/body/div/div/div[1]/div/div[2]/span/div/p").text
+            player_data.progress = int(result.split()[2])
+        except TimeoutException:
+            player_data.progress = 0
+        print(player_data.progress, "\t", player_data.steamid64, "\t", player_data.username)
 
     driver.close()
     print("Players data retrieved")
