@@ -12,7 +12,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
 CONSOLE_SCREEN_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\condump000.txt"
-MM_RANKING_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\cfg\mvm_ranking.cfg"
+MVM_RANKING_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\cfg\mvm_ranking.cfg"
 
 OPTIONS = Options()
 OPTIONS.headless = True  # False: Firefox window will show up
@@ -72,7 +72,7 @@ def get_all_steamid64(data: List[PlayerData]) -> List[PlayerData]:
 
 def create_cfg_file(data: List[PlayerData]):
     """Cfg file creation."""
-    mvm_ranking_file = open(MM_RANKING_PATH, 'w', encoding='utf8')
+    mvm_ranking_file = open(MVM_RANKING_PATH, 'w', encoding='utf8')
     event = "Operation Holographic Harvest"
 
     for i, p_d in enumerate(data):
