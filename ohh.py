@@ -109,8 +109,11 @@ def create_cfg_file(data: List[PlayerData]):
                                    " with all " + str(p_d.progress) + " missions completed!\"\n")
         else:
             print(f"{p_d.progress} points has no associated sentence")
+            mvm_ranking_file.write("echo \"p" + str(i + 1) + " ERROR: " + str(p_d.progress)
+                                   + " missions has no associated sentence is " + p_d.username + "\"\n\n")
+            continue
         mvm_ranking_file.write("echo \"p" + str(i + 1) + " with " + str(p_d.progress)
-                               + ' stars' + " is " + p_d.username + "\"\n\n")
+                               + " missions is " + p_d.username + "\"\n\n")
     mvm_ranking_file.close()
     print("Cfg file created")
 
