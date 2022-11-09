@@ -14,5 +14,4 @@ TF2 Commands :
 - after executing the python program : 'exec mvm_ranking'.
 
 ## TODO
-Instead of only accepting condump000.txt, look for the latest condump by cheecking the number at the end of the file name.
 Make the tf2 messages easier to handle
