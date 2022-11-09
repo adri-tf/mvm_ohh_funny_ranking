@@ -12,6 +12,3 @@ TF2 Commands :
 - 'status' (shows all player's id in server) ;
 - 'condump' (screenshot of the console saved as condump000.txt).
 - after executing the python program : 'exec mvm_ranking'.
-
-## TODO
-Make the tf2 messages easier to handle
