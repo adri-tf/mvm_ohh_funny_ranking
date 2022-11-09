@@ -12,7 +12,7 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
-CONSOLE_SCREEN_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\condump000.txt"
+CONSOLE_DUMP_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf"
 MVM_RANKING_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\cfg\mvm_ranking.cfg"
 
 OPTIONS = Options()
@@ -30,31 +30,40 @@ class PlayerData:
         self.progress: int = -1
 
 
-def get_players_id(path) -> List[PlayerData]:
+def get_players_id(folder_path) -> (List[PlayerData], list):
     """Retrieve the steamID64 of the players from the console dump file.
 
-    :param path: path tp the console dump file.
+    :param folder_path: path tp the console dump file.
     """
-    if not os.path.exists(path):
-        print("condump000.txt file does not exist")
+    files_to_delete: list = []
+    max_n, con_dump_path = -1, ""
+    for file_name in os.listdir(folder_path):
+        if file_name[:7] == "condump" and file_name[-4:] == ".txt":
+            if int(file_name[7:-4]) > max_n:
+                max_n = int(file_name[7:-4])
+                con_dump_path = os.path.join(CONSOLE_DUMP_PATH, file_name)
+                files_to_delete.append(os.path.join(folder_path, file_name))
+
+    if max_n < 0:
+        print("No console dump file found")
         input()
         exit()
 
     data: List[PlayerData] = []
-    with open(path, encoding='utf8') as file:
+    with open(con_dump_path, encoding='utf8') as file:
         for line in file:
             if "[U:1" in line:  # steamID is: [U:1:STEAM_ID]
                 username = line.split('"')[1]  # username is right after the first "
                 steamid3 = "[U:1" + line.split("[U:1")[-1][:11]
                 data.append(PlayerData(username, steamid3))
-    print("Console dump file data retrieved")
+    print(f"condump{max_n}.txt file data retrieved")
 
     # SteamID64
     for player_data in data:
         req = requests.get("https://steamidfinder.com/lookup/" + player_data.steamid3)
         soup = BeautifulSoup(req.content, features="html.parser")
         player_data.steamid64 = str(soup.find_all('a', text='Add to Friends')[0])[53:-36]
-    return data
+    return data, files_to_delete
 
 
 def get_players_data(data: List[PlayerData], url: str, xpath: str) -> List[PlayerData]:
@@ -76,16 +85,21 @@ def get_players_data(data: List[PlayerData], url: str, xpath: str) -> List[Playe
         except TimeoutException:
             player_data.progress = 0
         print(player_data.progress, "\t", player_data.steamid64, "\t", player_data.username)
-    driver.close()
-    print("Players data retrieved")
+    driver.quit()
     return data
+
+
+def remove_con_dump_files(files_to_delete: list):
+    """Remove all console dump files."""
+    print("Press Enter to delete file...")
+    input()
+    for file_path in files_to_delete:
+        os.remove(file_path)
 
 
 def main(url: str, xpath: str, create_cfg_file: Callable):
     """Main function."""
-    players_data = get_players_id(CONSOLE_SCREEN_PATH)
+    players_data, con_dump_files = get_players_id(CONSOLE_DUMP_PATH)
     get_players_data(players_data, url, xpath)
     create_cfg_file(players_data)
-    print("Press Enter to delete file...")
-    input()
-    os.remove(CONSOLE_SCREEN_PATH)
+    remove_con_dump_files(con_dump_files)
