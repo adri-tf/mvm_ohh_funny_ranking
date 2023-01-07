@@ -31,10 +31,13 @@ def create_cfg_file(data: List[PlayerData]):
         elif p_d.progress < 250:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is an Expert of " + event +
                                    " with " + str(p_d.progress) + " missions completed!\"\n")
-        elif p_d.progress < 275:
+        elif p_d.progress < 300:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Veteran of " + event +
                                    " with " + str(p_d.progress) + " missions completed!\"\n")
-        elif p_d.progress == 275:
+        elif p_d.progress < 308:
+            mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a Legend of " + event +
+                                   " with " + str(p_d.progress) + " missions completed!\"\n")
+        elif p_d.progress == 308:
             mvm_ranking_file.write("alias p" + str(i + 1) + " say \"" + p_d.username + " is a God of " + event +
                                    " with all " + str(p_d.progress) + " missions completed!\"\n")
         else:
