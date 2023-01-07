@@ -1,4 +1,5 @@
 ﻿"""archives.py"""
+from lxml import html
 import os
 from typing import List, Callable
 
@@ -14,6 +15,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 CONSOLE_DUMP_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf"
 MVM_RANKING_PATH = r"C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf\cfg\mvm_ranking.cfg"
+STEAM_ID_FINDER_XPATH = "//tr/td/code/text()"
 
 OPTIONS = Options()
 OPTIONS.headless = True  # False: Firefox window will show up
@@ -60,9 +62,9 @@ def get_players_id(folder_path) -> (List[PlayerData], list):
 
     # SteamID64
     for player_data in data:
-        req = requests.get("https://steamidfinder.com/lookup/" + player_data.steamid3)
-        soup = BeautifulSoup(req.content, features="html.parser")
-        player_data.steamid64 = str(soup.find_all('a', text='Add to Friends')[0])[53:-36]
+        page = requests.get("https://steamidfinder.com/lookup/" + player_data.steamid3)
+        tree = html.fromstring(page.content)
+        player_data.steamid64 = tree.xpath(STEAM_ID_FINDER_XPATH)[2]
     return data, files_to_delete
 
 
