@@ -1,5 +1,5 @@
 # mvm_funny_ranking
-Join a server and judge people about their score in Operation Holographic Harvest.
+Join a server and judge people about their score in Archives.
 
 Protocol :
 - get user Steam ID ;
